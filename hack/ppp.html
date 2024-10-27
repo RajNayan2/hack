@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <style>
+        .navigation {
+
+            border: 2px solid black;
+            border-radius: 30px;
+            width: 100%;
+            height: 40px;
+        }
+
+        .u {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: nowrap;
+
+        }
+        a{
+            
+color:black;
+        }
+
+        .li1,
+        .li2,
+        .li3,
+        .li4,
+        .li5 {
+            /* margin: 2px; */
+            /* padding: 2px; */
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+
+        li {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+
+        }
+
+        img {
+            width: 4px;
+            /* margin: 8px; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .imgtag {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .uu {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+        .main{
+
+            margin-left: 15px  ;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: blur(1px);
+        }
+        img{
+            border: 1px solid;
+            height: 70%;
+            border-radius: 15px;
+            width: 95%;
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            border: 2px solid black;
+            border-radius: 30px;
+            width: 60%;
+            height: 260px;
+            overflow: auto;
+            margin-left: 20%;
+            background-image: url("disp.jpg");
+            box-shadow: 12px 18px 6px 5px;
+
+        }
+        button{
+            width: 100px;
+            height: 60px;
+            background-color: red;
+            border-radius: 30px;
+        }
+        button:hover{
+            background-color: green;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("disp.jpg");
+        }
+        #map-container {
+            width: 100%;
+            height: 300px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .alert {
+            margin-bottom: 0.5rem;
+        }
+        .content{
+            margin: 50px;
+            border: 2px solid;
+            border-radius: 30px;
+            width: 80%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            filter: brightness(1px);
+            overflow-y: auto;
+            /* display: flex; */
+            box-shadow: 12px 18px 6px 5px;
+
+
+        }
+        form{
+            border: 2px solid;
+            border-radius: 30px ;
+            width: 50%;
+            height: 300px;
+            background-color: white;
+            box-shadow: 12px 18px 6px 5px;
+            /* display: flex; */
+            /* justify-content: center; */
+            /* align-items: center; */
+        }
+        .log{
+            width: 250px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            /* align-items: center; */
+            height: 50px;
+            border-radius: 30px;
+            width: 80%;
+            padding: 10px;
+            margin: 5px;
+            
+            /* margin-bottom: 15px; */
+            /* border-radius: 20px; */
+
+        }
+        input{
+            width: 100%;
+            height: 50px;
+            border-radius: 30px;
+            margin: 5px;
+        }
+
+select{
+    margin: 5px;
+
+}
+.p{
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+    </style>
+</head>
+
+<body>
+    <nav class="navigation1">
+        <div class="navigation">
+            <!-- <img src="dis.jpeg" alt="disater" class="imagtag"> -->
+            <div class="uu">
+                <ul class="u">
+                    <li class="li1 "><a href="#pa" > ABOUT</a></li>
+                    <li class="li2"> <a href="#">EMERGENCY</a></li>
+                    <li class="li3"><a href="#">CALL</a></li>
+                    <li class="li4"><a href="#">ALERT HUB</a></li>
+                    <li class="li5"><a href="#">PERCAUTION</a></li>
+                    <li class="li6"><a href="#">CURRENT STATUS</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="row mt-3">
+            <!-- Inventory Section -->
+            <div class="col-md-4" id="inventory">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Current Inventory
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Water Bottles: 500 
+                                <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#inventoryModal">Details</button>
+                            </li>
+                            <li class="list-group-item">First Aid Kits: 150</li>
+                            <li class="list-group-item">Blankets: 300</li>
+                            <li class="list-group-item">Canned Food: 1000</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Section -->
+            <div class="col-md-5" id="map">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Route Map
+                    </div>
+                    <div class="card-body">
+                        <div id="map-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div class="col-md-3" id="notifications">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        Notifications
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-warning" role="alert">
+                            Low stock: Water Bottles!
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            New route added for location X.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Details Modal -->
+    <div class="modal fade" id="inventoryModal" tabindex="-1" aria-labelledby="inventoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="inventoryModalLabel">Inventory Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Water Bottles:</strong> 500 units available. Expiration date: 2025-06-01</p>
+                    <p><strong>Stored Location:</strong> Warehouse 1</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="main">
+            <div class="img">
+                <!-- <img class="img" src="disp.jpg" alt=""  > -->
+            </div>
+        </div>
+        <div class="container">
+            <div class="exe">
+            <h1>Current Location Finder</h1>
+            <button onclick="getLocation()" class="location-btn">Get My Location</button>
+            <div id="result" class="result">
+                <p id="loading" class="hidden">Getting location...</p>
+                <p id="coordinates" class="hidden"></p>
+                <p id="address" class="hidden">
+                
+                </p>
+                <p id="error" class="hidden"></p>
+            </div>
+        </div>
+        </div>
+        <div class="p">        <form action="post">
+            <div class="log">
+                <div class="input">
+                    <input type="tel" placeholder="975-233-852-2" class="number" id="number" pattern="1-9">
+                    <input type="text" class="text"  placeholder="Address">
+                   <div class="members">         
+                       <select name="check" id="check">
+                        <option value="member1">Number of Member's</option>
+                        <option value="" class="member1">1</option>
+                        <option value="" class="member2">2</option>
+                        <option value="" class="member3">3</option>
+                        <option value="" class="member4">4</option>
+                        <option value="" class="member5">5</option>
+                        <option value="" class="member6">more...</option>
+                    </select>
+                </div> 
+        
+                    <div class="problem">           
+                         <select name="problem" id="problem">
+                        <option value="" class="problem1.1">Problem</option>
+                        <option value="" class="problem1">Stuck In flood</option>
+                        <option value="" class="problem2">Food Shotage</option>
+                        <option value="" class="problem3">Medical</option>
+                        <option value="" class="problem4">Other...</option>
+                    </select>
+                </div>
+        
+                    <button>Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="content">
+        <p class="pa" id="pa">The National Disaster Response Force (NDRF) is an Indian specialised force constituted under the Disaster Management Act, 2005.[2] : section 44–45 [3][4]
+
+            The responsibility of managing disasters in India is that of the state governments. The ‘Nodal Ministry’ in the central government for management of natural disasters is the Ministry of Home Affairs (MHA).[5]
+            
+            When 'calamities of severe nature' occur, the Central Government is responsible for providing aid and assistance to the affected state, including deploying, at the State's request, of Armed Forces, Central Paramilitary Forces, National Disaster Response Force (NDRF), and such communication, air and other assets, as are available and needed.[6]
+            
+            National Disaster Response Force (NDRF) is under the National Disaster Management Authority.[7] The head of the NDRF is designated as Director General. The Director Generals of NDRF are IPS officers on deputation from Indian police organizations. Director General is a three-star officer.
+            
+            The NDRF is led by a Director General and also has several Inspector Generals (IG) and Deputy IGs, who are flag officers and wear badges of rank.<
+            NDRF has proved its efficacy with its commendable performance during various disasters including the drowning cases, building collapses, landslides, devastating floods and Cyclones. NDRF has saved 133,192 human lives and retrieved 2760 dead bodies of disaster victims in 73 response operations in the country. Some of the major response operations of NDRF as below:
+<br>
+                <strong>2007</strong>
+                <br>
+                Flood in Bhavnagar, Gujarat <strong></strong>– 3–5 July 2007 </strong>– Rescued 291 people; distributed 3,750 food packets
+                Flood in Rajkot, Gujarat –<strong> 3–5 July 2007 </strong>– Rescued 291 people; distributed 3,750 food packets
+           <br> <strong>2008</strong>
+                
+                Building collapse (Hotel Shakunt) in Ahmedabad, Gujarat <strong>– 3–5 Feb 2008 </strong>– Saved 10 people and recovered 6 dead bodies
+                Flood in Lakhimpur, Assam – 14 June – 20 July 2008 – Rescued 2500 civilians
+                Flood in Dhemaji, Assam – 16 June – 31 July 2008 – Rescued 600 people
+                Flood in Lakhimpur, Assam – 21 July – 4 August 2008 – Evacuated 2000 people
+                <br>
+                Rescue and relief operations during the Kosi breach in Bihar
+                Kosi breach in Bihar – 20 August 2008 – Saved over 105,000 people including women, children and the elderly; distributed medicines and water bottles
+                Flood in Lakhimpur, Assam – 31 Aug – 9 September 2008 – Saved 750 people
+                Flood in Puri, Cuttack, Kendrapara & Jagatsinghpur, Odisha – Sept 2008 – Saved over 1000 people
+                Flood in Kamrup, Assam – 28 September 2008 – Saved 350 people
+                Flood in Tiruvarur, Tamil Nadu – 26–30 Nov 2008 – Saved 773 people
+                Flood in Chennai, Tamil Nadu – 26 Nov – 2 December 2008 – Rescued 1550 people
+                <br> <strong>2009</strong>
+                
+                Cyclone Aila in North 24 Parganas & South 24 Parganas, West Bengal – 25 May – 10 June 2009 – Rescued 2000 people; distribution of medicine to 30,000 victims & food packets to 16,000 homeless victims
+                Flood in Barpeta, Assam – 27 May 2009 – Saved 300 people
+                Flood in Junagarh and Porbandar, Gujarat – 16 to 29 July 2009 – Saved 2225 people
+                Flood in Kasarkode, Kannur and Ernakulam, Kerala – 17–24 July 2009 – Saved 180 people
+                Flood in Sitamarhi, Bihar (Bagmati breach) – 2–9 Aug 2009 – Rescued 1034 people; distributed medicines to 831 victims
+                Flood in Howrah & Hooghly, West Bengal – 8–14 Sep 2009 – Rescue 675 people
+                Andhra Pradesh & Karnataka Floods – Oct 2009 – Saved 10,659 people
+                NDRF rescue and relief operation, Karnataka, <b>2009</b>
+                NDRF rescue and relief operation, Karnataka,<b>2009</b> 
+                 
+                Rescue and relief work during the Odisha Flood of 2009
+                Rescue and relief work during the Odisha Flood of 2009
+                 
+                NDRF shifting school children to safer places during Cyclone Aila, 2009
+                NDRF shifting school children to safer places during Cyclone Aila, 2009
+                <br><b>2010</b>
+                
+                Building collapse at Bellary, Karnataka – 27 January 2010 – Saved 20 human lives and recovered 27 dead bodies
+                Flood in Guwahati, Assam – 20–25 April 2010 – Saved 300 human lives
+                Cyclone Laila in Andhra Pradesh & Karnataka – 18 May 2010
+                <br><b>2011</b>
+                
+                46 members NDRF team performed search and rescue operation in Onagawa, Miyagi (Japan).[14]
+                <br><b>2013</b>
+                
+                Cyclone Phailin in the states of Andhra Pradesh, Odisha, etc. – The battalions of the army and navy were used to evacuate people.
+                <br><b>2015</b>
+                
+                NDRF rushed teams to parts of India and Nepal affected by a late April earthquake.
+                Flood in Chennai, Tamil Nadu – 10 Nov
+                <br><b>2019</b>
+                
+                At least 58 teams of NDRF were deputed in Kerala during a flood in August 2018 making it the highest-ever deployment of NDRF in any single state since its raising. 194 persons have been rescued and more than 10,000 people have been evacuated so far.[15] The NDRF teams are operational at present in Thrissur (15), Pathanamthitta (13), Alappuzha (11), Ernakulum (5), Idukki (4), Mallapuram (3), Wayanad and Kozhikode (2 each)</p>
+    </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script >
+                document.addEventListener('DOMContentLoaded', () => {
+            const map = L.map('map-container').setView([51.505, -0.09], 2);
+            
+            // Set up tile layer for OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Example marker for a warehouse location
+            L.marker([51.5, -0.09]).addTo(map)
+                .bindPopup('Relief Warehouse')
+                .openPopup();
+        });
+
+        // script.js
+        function getLocation() {
+            const loading = document.getElementById('loading');
+            const coordinates = document.getElementById('coordinates');
+            
+
+            const address = document.getElementById('address');
+            const error = document.getElementById('error');
+        
+            // Reset display
+            loading.classList.remove('hidden');
+            coordinates.classList.add('hidden');
+            address.classList.add('hidden');
+            error.classList.add('hidden');
+        
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+        
+                        // Display coordinates
+
+                        coordinates.textContent = `Latitude: ${lat.toFixed(4)}, Longitude: ${lon.toFixed(4)}`;
+                        coordinates.classList.remove('hidden');
+        
+                        try {
+                            // Get address using reverse geocoding (Nominatim API)
+                            const response = await fetch(
+                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+                            );
+                            const data = await response.json();
+        
+                            // Display address
+                            address.textContent = `Address: ${data.display_name}`;
+                            address.classList.remove('hidden');
+                        } catch (err) {
+                            error.textContent = 'Error getting address';
+                            error.classList.remove('hidden');
+                        }
+        
+                        loading.classList.add('hidden');
+                    },
+                    (err) => {
+                        loading.classList.add('hidden');
+                        error.textContent = `Error: ${err.message}`;
+                        error.classList.remove('hidden');
+                    }
+                );
+            } else {
+                loading.classList.add('hidden');
+                error.textContent = 'Geolocation is not supported by this browser.';
+                error.classList.remove('hidden');
+            }
+        }
+        function print(){
+
+        }
+            </script>
+        
+</body>
+
+</html>
